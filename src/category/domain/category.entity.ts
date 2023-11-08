@@ -1,3 +1,6 @@
+import { Entity } from "../../shared/domain/entity";
+import { EntityValidationError } from "../../shared/domain/validators/validation.error";
+import { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { CategoryValidatorFactory } from "./category.validator";
 
@@ -9,13 +12,14 @@ export type CategoryConstructorProps = {
     createdAt?: Date;
 };
 
-export type CategoryCreateCommand = {
+export type CategoryUpdateProps = {
     name: string;
     description?: string | null;
-    isActive?: boolean;
 };
 
-export class Category { // Vernon, Evans: "An entity does not have to validate its own invariants. It can delegate that to a domain service."
+export class Category extends Entity {
+    // Vernon, Evans: "An entity does not have to validate its own invariants. It can delegate that to a domain service."
+
     categoryId: Uuid;
     name: string;
     description: string | null;
@@ -23,11 +27,16 @@ export class Category { // Vernon, Evans: "An entity does not have to validate i
     createdAt: Date;
 
     constructor(props: CategoryConstructorProps) {
+        super();
         this.categoryId = props.categoryId ?? new Uuid();
         this.name = props.name;
         this.description = props.description ?? null;
         this.isActive = props.isActive ?? true;
         this.createdAt = props.createdAt ?? new Date();
+    }
+
+    get entityId(): ValueObject {
+        return this.categoryId;
     }
 
     static create(props: CategoryConstructorProps): Category {
@@ -36,12 +45,20 @@ export class Category { // Vernon, Evans: "An entity does not have to validate i
         return category;
     }
 
+    update(props: CategoryUpdateProps): void {
+        this.name = props.name;
+        this.description = props.description ?? null;
+        Category.validate(this);
+    }
+
     changeName(name: string): void {
         this.name = name;
+        Category.validate(this);
     }
 
     changeDescription(description: string): void {
         this.description = description;
+        Category.validate(this);
     }
 
     activate(): void {
@@ -54,7 +71,10 @@ export class Category { // Vernon, Evans: "An entity does not have to validate i
 
     static validate(entity: Category) {
         const validator = CategoryValidatorFactory.create();
-        return validator.validate(entity);
+        const isValid = validator.validate(entity);
+        if (!isValid) {
+            throw new EntityValidationError(validator.errors);
+        }
     }
 
     toJSON() {
