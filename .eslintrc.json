@@ -14,7 +14,8 @@
         "@typescript-eslint/no-non-null-assertion": "warn",
         "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/dot-notation": "off",
-        "@typescript-eslint/await-thenable": "off"
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/no-invalid-void-type": "off"
     },
     "overrides": [
         {

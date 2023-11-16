@@ -23,7 +23,7 @@ export class Category extends Entity {
 
   categoryId: Uuid
   name: string
-  description: string | null
+  description?: string | null
   isActive: boolean
   createdAt: Date
 
@@ -57,7 +57,7 @@ export class Category extends Entity {
     Category.validate(this)
   }
 
-  changeDescription (description: string): void {
+  changeDescription (description?: string | null): void {
     this.description = description
     Category.validate(this)
   }

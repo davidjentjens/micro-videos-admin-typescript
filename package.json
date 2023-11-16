@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "class-validator": "^0.14.0",
+    "dotenv": "^16.3.1",
     "lodash": "^4.17.21",
     "sequelize": "^6.35.0",
     "sequelize-typescript": "^2.1.5",

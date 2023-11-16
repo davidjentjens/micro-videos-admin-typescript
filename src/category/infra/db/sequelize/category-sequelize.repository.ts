@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Op } from 'sequelize'
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error'
-import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo'
+import { type Uuid } from '../../../../shared/domain/value-objects/uuid.vo'
 import { Category } from '../../../domain/category.entity'
 import { CategorySearchResult, type CategorySearchParams, type ICategoryRepository } from '../../../domain/category.repository'
 import { type CategoryModel } from './category.model'
@@ -78,13 +78,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     })
     return new CategorySearchResult({
       items: models.map((model) => {
-        return new Category({
-          categoryId: new Uuid(model.categoryId),
-          name: model.name,
-          description: model.description,
-          isActive: model.isActive,
-          createdAt: model.createdAt
-        })
+        return CategoryModelMapper.toEntity(model)
       }),
       total: count,
       currentPage: props.page,
