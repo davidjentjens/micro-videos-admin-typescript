@@ -1,16 +1,16 @@
 import {
   type PaginationOutput,
   PaginationOutputMapper
-} from '../../../shared/application/pagination-output'
-import { type IUseCase } from '../../../shared/application/use-case.interface'
-import { type SortDirection } from '../../../shared/domain/repository/search-params'
+} from '../../../../shared/application/pagination-output'
+import { type IUseCase } from '../../../../shared/application/use-case.interface'
+import { type SortDirection } from '../../../../shared/domain/repository/search-params'
 import {
   type CategoryFilter,
   CategorySearchParams,
   type CategorySearchResult,
   type ICategoryRepository
-} from '../../domain/category.repository'
-import { type CategoryOutput, CategoryOutputMapper } from './common/category-output'
+} from '../../../domain/category.repository'
+import { type CategoryOutput, CategoryOutputMapper } from '../common/category-output'
 
 export interface ListCategoriesInput {
   page?: number

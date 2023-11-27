@@ -1,14 +1,9 @@
-import { type IUseCase } from '../../../shared/application/use-case.interface'
-import { EntityValidationError } from '../../../shared/domain/validators/validation.error'
-import { Category } from '../../domain/category.entity'
-import { type ICategoryRepository } from '../../domain/category.repository'
-import { CategoryOutputMapper, type CategoryOutput } from './common/category-output'
-
-export interface CreateCategoryInput {
-  name: string
-  description?: string | null
-  isActive?: boolean
-}
+import { type IUseCase } from '../../../../shared/application/use-case.interface'
+import { EntityValidationError } from '../../../../shared/domain/validators/validation.error'
+import { Category } from '../../../domain/category.entity'
+import { type ICategoryRepository } from '../../../domain/category.repository'
+import { CategoryOutputMapper, type CategoryOutput } from '../common/category-output'
+import { type CreateCategoryInput } from './create-category.input'
 
 export type CreateCategoryOutput = CategoryOutput
 
