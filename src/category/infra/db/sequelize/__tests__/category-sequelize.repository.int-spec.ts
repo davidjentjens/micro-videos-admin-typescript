@@ -80,23 +80,7 @@ describe('CategorySequelizeRepository Integration Test', () => {
         .withCreatedAt(createdAt)
         .build()
 
-      // TODO: Replace with bulkInsert
-      await repository.insert(categories[0])
-      await repository.insert(categories[1])
-      await repository.insert(categories[2])
-      await repository.insert(categories[3])
-      await repository.insert(categories[4])
-      await repository.insert(categories[5])
-      await repository.insert(categories[6])
-      await repository.insert(categories[7])
-      await repository.insert(categories[8])
-      await repository.insert(categories[9])
-      await repository.insert(categories[10])
-      await repository.insert(categories[11])
-      await repository.insert(categories[12])
-      await repository.insert(categories[13])
-      await repository.insert(categories[14])
-      await repository.insert(categories[15])
+      await repository.bulkInsert(categories)
 
       const spyToEntity = jest.spyOn(CategoryModelMapper, 'toEntity')
       const searchOutput = await repository.search(new CategorySearchParams())
@@ -163,11 +147,7 @@ describe('CategorySequelizeRepository Integration Test', () => {
           .build()
       ]
 
-      // TODO: Replace with bulkInsert
-      await repository.insert(categories[0])
-      await repository.insert(categories[1])
-      await repository.insert(categories[2])
-      await repository.insert(categories[3])
+      await repository.bulkInsert(categories)
 
       let searchOutput = await repository.search(
         new CategorySearchParams({
@@ -212,12 +192,7 @@ describe('CategorySequelizeRepository Integration Test', () => {
         Category.fake().aCategory().withName('c').build()
       ]
 
-      // TODO: Replace with bulkInsert
-      await repository.insert(categories[0])
-      await repository.insert(categories[1])
-      await repository.insert(categories[2])
-      await repository.insert(categories[3])
-      await repository.insert(categories[4])
+      await repository.bulkInsert(categories)
 
       const arrange = [
         {
@@ -321,13 +296,7 @@ describe('CategorySequelizeRepository Integration Test', () => {
       ]
 
       beforeEach(async () => {
-        // await repository.bulkInsert(categories)
-        // TODO: Replace with bulkInsert
-        await repository.insert(categories[0])
-        await repository.insert(categories[1])
-        await repository.insert(categories[2])
-        await repository.insert(categories[3])
-        await repository.insert(categories[4])
+        await repository.bulkInsert(categories)
       })
 
       test.each(arrange)(

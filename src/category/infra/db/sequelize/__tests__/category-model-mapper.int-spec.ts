@@ -12,13 +12,12 @@ describe('CategoryModelMapper Integration Tests', () => {
     expect.assertions(2)
     const model = CategoryModel.build({
       categoryId: '9366b7dc-2d71-4799-b91c-c64adb205104',
-      name: 'a'.repeat(100)
+      name: 'a'.repeat(256)
     })
     try {
       CategoryModelMapper.toEntity(model)
       fail('The category is valid, but it needs throws a EntityValidationError')
     } catch (e) {
-      console.log(JSON.stringify(e))
       expect(e).toBeInstanceOf(EntityValidationError)
       expect((e as EntityValidationError).error).toMatchObject([
         {
