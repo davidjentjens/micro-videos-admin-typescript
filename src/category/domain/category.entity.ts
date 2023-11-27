@@ -1,5 +1,4 @@
 import { Entity } from '../../shared/domain/entity'
-import { EntityValidationError } from '../../shared/domain/validators/validation.error'
 import { type ValueObject } from '../../shared/domain/value-object'
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo'
 import { CategoryFakeBuilder } from './category-fake.builder'
@@ -18,8 +17,9 @@ export interface CategoryUpdateProps {
   description?: string | null
 }
 
+// NOTE: Notification pattern for leaving validation exception handling to the application layer
 export class Category extends Entity {
-  // Vernon, Evans: "An entity does not have to validate its own invariants. It can delegate that to a domain service."
+  // NOTE: Vernon, Evans: "An entity does not have to validate its own invariants. It can delegate that to a domain service."
 
   categoryId: Uuid
   name: string
@@ -42,24 +42,23 @@ export class Category extends Entity {
 
   static create (props: CategoryConstructorProps): Category {
     const category = new Category(props)
-    Category.validate(category)
+    // category.validate();
+    category.validate(['name'])
     return category
   }
 
   update (props: CategoryUpdateProps): void {
     this.name = props.name
     this.description = props.description ?? null
-    Category.validate(this)
   }
 
   changeName (name: string): void {
     this.name = name
-    Category.validate(this)
+    this.validate(['name'])
   }
 
   changeDescription (description?: string | null): void {
     this.description = description
-    Category.validate(this)
   }
 
   activate (): void {
@@ -70,12 +69,9 @@ export class Category extends Entity {
     this.isActive = false
   }
 
-  static validate (entity: Category): void {
+  validate (fields?: string[]): boolean {
     const validator = CategoryValidatorFactory.create()
-    const isValid = validator.validate(entity)
-    if (!isValid) {
-      throw new EntityValidationError(validator.errors!)
-    }
+    return validator.validate(this.notification, this, fields)
   }
 
   static fake () {
