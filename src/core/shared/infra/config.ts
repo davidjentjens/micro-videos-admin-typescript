@@ -10,7 +10,7 @@ interface DBEnv {
 export class Config {
   static env: any = null
 
-  static db (): DBEnv {
+  static db(): DBEnv {
     Config.readEnv()
 
     return {
@@ -20,13 +20,13 @@ export class Config {
     }
   }
 
-  static readEnv (): void {
+  static readEnv(): void {
     if (Config.env) {
       return
     }
 
     Config.env = readEnv({
-      path: join(__dirname, `../../../envs/.env.${process.env.NODE_ENV}`)
+      path: join(__dirname, `../../../../envs/.env.${process.env.NODE_ENV}`)
     }).parsed
   }
 }

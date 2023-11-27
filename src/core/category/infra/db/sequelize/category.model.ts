@@ -10,8 +10,8 @@ export interface CategoryModelProps {
   categoryId: string
   name: string
   description: string | null
-  isActive: boolean
-  createdAt: Date
+  isActive?: boolean
+  createdAt?: Date
 }
 
 @Table({ tableName: 'categories', timestamps: false })

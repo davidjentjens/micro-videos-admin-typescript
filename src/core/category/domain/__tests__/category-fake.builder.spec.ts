@@ -57,7 +57,7 @@ describe('CategoryFakerBuilder Unit Tests', () => {
     test('should call the word method', () => {
       const chance = Chance()
       const spyWordMethod = jest.spyOn(chance, 'word')
-      faker['chance'] = chance
+      Object.assign(faker, { chance })
       faker.build()
       expect(spyWordMethod).toHaveBeenCalled()
     })
@@ -99,7 +99,7 @@ describe('CategoryFakerBuilder Unit Tests', () => {
     test('should call the paragraph method', () => {
       const chance = Chance()
       const spyParagraphMethod = jest.spyOn(chance, 'paragraph')
-      faker['chance'] = chance
+      Object.assign(faker, { chance })
       faker.build()
       expect(spyParagraphMethod).toHaveBeenCalled()
     })

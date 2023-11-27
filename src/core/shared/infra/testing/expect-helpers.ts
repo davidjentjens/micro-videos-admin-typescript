@@ -6,7 +6,7 @@ import { type Notification } from '../../../shared/domain/validators/notificatio
 } | (() => any) */
 
 expect.extend({
-  notificationContainsErrorMessages (
+  notificationContainsErrorMessages(
     expected: Notification,
     received: Array<string | Record<string, string[]>>
   ) {
@@ -18,8 +18,8 @@ expect.extend({
           const fieldMessages = expected.errors.get(field) as string[]
           return (
             fieldMessages &&
-              (fieldMessages.length > 0) &&
-              fieldMessages.every((message) => messages.includes(message))
+            (fieldMessages.length > 0) &&
+            fieldMessages.every((message) => messages.includes(message))
           )
         })
       }
@@ -27,12 +27,12 @@ expect.extend({
     return every
       ? { pass: true, message: () => '' }
       : {
-          pass: false,
-          message: () =>
-              `The validation errors not contains ${JSON.stringify(
-                received
-              )}. Current: ${JSON.stringify(expected.toJSON())}`
-        }
+        pass: false,
+        message: () =>
+          `The validation errors not contains ${JSON.stringify(
+            received
+          )}. Current: ${JSON.stringify(expected.toJSON())}`
+      }
   }
 })
 
