@@ -1,4 +1,4 @@
-import { type Notification } from '../../../shared/domain/validators/notification'
+import { type Notification } from '../../../shared/domain/validators/notification';
 
 /* type Expected = {
   validator: ClassValidatorFields<any>
@@ -6,35 +6,39 @@ import { type Notification } from '../../../shared/domain/validators/notificatio
 } | (() => any) */
 
 expect.extend({
-  notificationContainsErrorMessages(
-    expected: Notification,
-    received: Array<string | Record<string, string[]>>
-  ) {
-    const every = received.every((error) => {
-      if (typeof error === 'string') {
-        return expected.errors.has(error)
-      } else {
-        return Object.entries(error).every(([field, messages]) => {
-          const fieldMessages = expected.errors.get(field) as string[]
-          return (
-            fieldMessages &&
-            (fieldMessages.length > 0) &&
-            fieldMessages.every((message) => messages.includes(message))
-          )
-        })
-      }
-    })
-    return every
-      ? { pass: true, message: () => '' }
-      : {
-        pass: false,
-        message: () =>
-          `The validation errors not contains ${JSON.stringify(
-            received
-          )}. Current: ${JSON.stringify(expected.toJSON())}`
-      }
-  }
-})
+    notificationContainsErrorMessages(
+        expected: Notification,
+        received: Array<string | Record<string, string[]>>,
+    ) {
+        const every = received.every((error) => {
+            if (typeof error === 'string') {
+                return expected.errors.has(error);
+            } else {
+                return Object.entries(error).every(([field, messages]) => {
+                    const fieldMessages = expected.errors.get(
+                        field,
+                    ) as string[];
+                    return (
+                        fieldMessages &&
+                        fieldMessages.length > 0 &&
+                        fieldMessages.every((message) =>
+                            messages.includes(message),
+                        )
+                    );
+                });
+            }
+        });
+        return every
+            ? { pass: true, message: () => '' }
+            : {
+                  pass: false,
+                  message: () =>
+                      `The validation errors not contains ${JSON.stringify(
+                          received,
+                      )}. Current: ${JSON.stringify(expected.toJSON())}`,
+              };
+    },
+});
 
 /* function assertContainsErrorsMessages (
   expected: FieldsErrors,
